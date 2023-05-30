@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>tn.esprit</groupId>
-    <artifactId>PiCompBack</artifactId>
+    <artifactId>PiCampBack</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>PiCompBack</name>
-    <description>PiCompBack</description>
+    <name>PiCampBack</name>
+    <description>PiCampBack</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
