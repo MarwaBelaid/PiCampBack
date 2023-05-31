@@ -18,7 +18,7 @@ import java.util.Date;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Signal implements Serializable {
+public class Signals implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
