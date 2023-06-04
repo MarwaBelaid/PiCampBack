@@ -27,5 +27,13 @@ public class Reservation implements Serializable {
     @Enumerated(EnumType.STRING)
     Statut statut ;
 
+    @ManyToOne
+    Utilisateurs reservation_utilisateur ;
+
+    @ManyToOne
+    CentreCamp Reservation_CentreCamp ;
+
+
+
 
 }

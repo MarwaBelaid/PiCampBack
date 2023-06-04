@@ -3,11 +3,9 @@ package tn.esprit.picompback.Entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,5 +26,15 @@ public class CentreCamp implements Serializable {
     float tarif_nuitee;
     int places_disponibles;
     Byte[] photos_centre ;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Reservation_CentreCamp")
+    Set<Reservation> Reservations ;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Feedback_CentreCamp")
+    Set<Feedback> Feedbacks ;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Activity_CentreCamp")
+    Set<Activity> Activities ;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Equipement_CentreCamp")
+    Set<Equipement> Equipements ;
+
+
 
 }

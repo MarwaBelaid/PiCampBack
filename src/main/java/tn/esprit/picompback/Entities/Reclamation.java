@@ -27,5 +27,14 @@ public class Reclamation implements Serializable {
     @Enumerated(EnumType.STRING)
     Statut statut_reclamation;
 
+    @ManyToOne
+    Utilisateurs user_qui_a_reclamer;
+
+    @ManyToOne
+    Utilisateurs user_qui_a_traiter_reclamation;
+
+
+
+
 
 }

@@ -3,12 +3,10 @@ package tn.esprit.picompback.Entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,4 +24,6 @@ public class Meteo implements Serializable {
     float temperature;
     String lieu ;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meteo")
+    Set<Utilisateurs> utilisateurs ;
 }

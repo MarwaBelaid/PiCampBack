@@ -33,6 +33,8 @@ public class Activity implements Serializable {
     @Enumerated(EnumType.STRING)
     TypeActivity type ;
     Byte[] photo ;
+    @ManyToOne
+    CentreCamp Activity_CentreCamp ;
 
 
 
