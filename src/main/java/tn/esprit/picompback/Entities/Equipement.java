@@ -6,6 +6,7 @@ import tn.esprit.picompback.Entities.Enumeration.TypeEquipement;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,5 +25,15 @@ public class Equipement implements Serializable {
     @Enumerated(EnumType.STRING)
     TypeEquipement type;
     int quantité_disponible;
+    @ManyToOne
+    CentreCamp Equipement_CentreCamp ;
+    @ManyToMany(mappedBy="Equipements", cascade = CascadeType.ALL)
+    Set<Commande> Commandes;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
+    Set<Promo> Promos ;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Feedback_Equipemet")
+    Set<Feedback> Feedbacks ;
+
 
 }

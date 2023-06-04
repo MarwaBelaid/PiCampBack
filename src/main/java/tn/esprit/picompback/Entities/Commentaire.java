@@ -3,12 +3,10 @@ package tn.esprit.picompback.Entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,4 +26,16 @@ public class Commentaire implements Serializable {
     Date date_creation ;
 
     Date date_last_update;
+
+    @ManyToOne
+    Utilisateurs coment_utilisateurs ;
+    @ManyToOne
+    Post post_coment ;
+
+    @ManyToOne
+    Commentaire Response;
+
+    @OneToMany(mappedBy = "Response", cascade = CascadeType.ALL)
+    Set<Commentaire> Responses ;
+
 }

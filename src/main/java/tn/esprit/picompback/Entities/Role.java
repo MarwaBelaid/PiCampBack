@@ -2,11 +2,11 @@ package tn.esprit.picompback.Entities;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import tn.esprit.picompback.Entities.Enumeration.TypeReponse;
+import tn.esprit.picompback.Entities.Enumeration.role;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,13 +15,13 @@ import java.util.Date;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Reponse implements Serializable {
+public class Role implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id_reponse ;
-    String contenu_reponse ;
-    Date date_reponse;
+    long id_role ;
     @Enumerated(EnumType.STRING)
-    TypeReponse type_reponse ;
+    role role_user  ;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role_user")
+    Set<Utilisateurs> utilisateurs ;
 }

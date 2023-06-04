@@ -8,6 +8,7 @@ import tn.esprit.picompback.Entities.Enumeration.TypePaiement;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,6 +28,13 @@ public class Commande implements Serializable {
     EtatCommande etat ;
     @Enumerated(EnumType.STRING)
     TypePaiement type_paiement ;
+    @ManyToOne
+    Utilisateurs commande_utilisateur ;
+    @ManyToMany(cascade = CascadeType.ALL)
+    Set<Equipement> Equipements;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipement")
+    Set<Promo> Promos ;
 
 
 }
