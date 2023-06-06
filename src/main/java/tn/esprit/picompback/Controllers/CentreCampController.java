@@ -9,6 +9,7 @@ import tn.esprit.picompback.Services.ICentreCampService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("CentreCamp")
 public class CentreCampController {
 

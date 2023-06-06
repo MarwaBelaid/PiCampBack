@@ -8,6 +8,7 @@ import tn.esprit.picompback.Services.IActivityService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/activity")
 public class ActivityController {
 
