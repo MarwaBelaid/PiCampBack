@@ -1,9 +1,9 @@
-package tn.esprit.picompback.Services;
+package tn.esprit.picompback.Services.CampService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.picompback.Entities.CentreCamp;
-import tn.esprit.picompback.Repositories.CentreCampRepository;
+import tn.esprit.picompback.Repositories.CampRepos.CentreCampRepository;
 
 import java.util.List;
 

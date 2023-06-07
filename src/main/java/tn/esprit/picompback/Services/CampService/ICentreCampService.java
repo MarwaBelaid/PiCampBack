@@ -1,7 +1,6 @@
-package tn.esprit.picompback.Services;
+package tn.esprit.picompback.Services.CampService;
 
 import tn.esprit.picompback.Entities.CentreCamp;
-import tn.esprit.picompback.Repositories.CentreCampRepository;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package tn.esprit.picompback.Controllers;
+package tn.esprit.picompback.Controllers.CampController;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.picompback.Entities.CentreCamp;
-import tn.esprit.picompback.Services.ICentreCampService;
+import tn.esprit.picompback.Services.CampService.ICentreCampService;
 
 import java.util.List;
 
