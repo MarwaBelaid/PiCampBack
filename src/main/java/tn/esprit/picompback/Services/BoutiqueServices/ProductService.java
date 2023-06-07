@@ -3,7 +3,9 @@ package tn.esprit.picompback.Services.BoutiqueServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.picompback.Entities.*;
+import tn.esprit.picompback.Entities.Enumeration.Status;
 import tn.esprit.picompback.Repositories.BoutiqueRepos.*;
+import tn.esprit.picompback.Repositories.CampRepos.CentreCampRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +17,7 @@ public class ProductService implements IProductService {
     ProductRepo boutique_repo;
 
     @Autowired
-    CentreCampRepo centreCamp_repo;
+    CentreCampRepository centreCamp_repo;
 
     @Override
     public List<Equipement> retrieveAllProducts() {
@@ -37,4 +39,6 @@ public class ProductService implements IProductService {
             throw new IllegalArgumentException("Centre does not exist");
         }
     }
+
+
 }

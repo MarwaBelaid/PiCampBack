@@ -1,6 +1,7 @@
 package tn.esprit.picompback.Services.BoutiqueServices;
 
 import tn.esprit.picompback.Entities.*;
+import tn.esprit.picompback.Entities.Enumeration.Status;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface IProductService {
     Equipement addProduct(Equipement p,Long idCentre);
     Equipement retrieveProduct(Long id);
 
-    //void assignProductToCommande(Long idProduit, Long idStock);
+
 }

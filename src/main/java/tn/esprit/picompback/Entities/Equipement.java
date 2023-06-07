@@ -2,6 +2,7 @@ package tn.esprit.picompback.Entities;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import tn.esprit.picompback.Entities.Enumeration.Status;
 import tn.esprit.picompback.Entities.Enumeration.TypeEquipement;
 
 import javax.persistence.*;
@@ -24,6 +25,9 @@ public class Equipement implements Serializable {
     String description;
     @Enumerated(EnumType.STRING)
     TypeEquipement type;
+
+    @Enumerated(EnumType.STRING)
+    Status status;
     int quantité_disponible;
     @ManyToOne
     CentreCamp Equipement_CentreCamp ;
