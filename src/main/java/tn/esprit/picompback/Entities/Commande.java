@@ -39,6 +39,7 @@ public class Commande implements Serializable {
     TypeCommande type_commande ;
     @ManyToOne
     Utilisateurs commande_utilisateur ;
+
     @ManyToMany(cascade = CascadeType.ALL)
     Set<Equipement> Equipements;
 
