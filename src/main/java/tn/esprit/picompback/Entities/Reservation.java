@@ -7,6 +7,7 @@ import tn.esprit.picompback.Entities.Enumeration.Statut;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -30,8 +31,8 @@ public class Reservation implements Serializable {
     @ManyToOne
     Utilisateurs reservation_utilisateur ;
 
-    @ManyToOne
-    CentreCamp Reservation_CentreCamp ;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Activities_Reservation")
+    Set<Activity> Activities ;
 
 
 

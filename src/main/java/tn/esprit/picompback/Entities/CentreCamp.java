@@ -26,8 +26,7 @@ public class CentreCamp implements Serializable {
     float tarif_nuitee;
     int places_disponibles;
     Byte[] photos_centre ;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Reservation_CentreCamp")
-    Set<Reservation> Reservations ;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Feedback_CentreCamp")
     Set<Feedback> Feedbacks ;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Activity_CentreCamp")

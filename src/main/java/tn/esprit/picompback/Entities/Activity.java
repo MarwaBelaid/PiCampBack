@@ -36,6 +36,9 @@ public class Activity implements Serializable {
     @ManyToOne
     CentreCamp Activity_CentreCamp ;
 
+    @ManyToOne
+    Reservation Activities_Reservation ;
+
 
 
 }
