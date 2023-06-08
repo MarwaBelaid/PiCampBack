@@ -40,4 +40,11 @@ public class ActivityController {
     public void DeleteActivity(@PathVariable("idActivity") long id) {
         activityService.DeleteActivity(id);
     }
+
+    @PutMapping("/Affecter-Activity-To-CentreCamp")
+    public void AffecterActivityAuCentreCamp(@PathVariable("idActivity") long idActivity, @PathVariable("idCamp")  long idCamp)
+    {
+        activityService.AffecterActivityAuCentreCamp(idActivity,idCamp);
+    }
+
 }
