@@ -29,4 +29,9 @@ public class ProductController {
     public Equipement addProduit(@RequestHeader("Content-Type") String HeaderValue,@ModelAttribute Equipement p, @PathVariable long idCentre,@RequestParam("image") MultipartFile multipartFile) throws IOException {
         return product_service.addProduct(p,idCentre,multipartFile);
     }
+
+    @GetMapping("/image/{idProduit}")
+    public String getImage(@PathVariable long idProduit) {
+        return product_service.getImage(idProduit);
+    }
 }

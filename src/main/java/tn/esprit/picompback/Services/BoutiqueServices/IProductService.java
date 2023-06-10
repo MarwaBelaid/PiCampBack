@@ -12,6 +12,7 @@ public interface IProductService {
 
     Equipement addProduct(Equipement p,Long idCentre, MultipartFile multipartFile) throws IOException;
     Equipement retrieveProduct(Long id);
+    String getImage(Long idProduit);
 
 
 }

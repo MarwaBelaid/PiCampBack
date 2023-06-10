@@ -11,11 +11,12 @@ import tn.esprit.picompback.Utils.FileUploadUtil;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Service
 public class ProductService implements IProductService {
-
+    private static final Logger logger = LogManager.getLogger(ProductService.class);
     @Autowired
     ProductRepo product_repo;
 
@@ -38,15 +39,25 @@ public class ProductService implements IProductService {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             p.setPhotos(fileName);
             p.setEquipement_CentreCamp(Centre);
-            String uploadDir = "equipment-photos/" + p.getId_equipement();
+            Equipement savedProduct =product_repo.save(p);
+            logger.info("*************************In method " + savedProduct.getId_equipement() + " : ");
+            String uploadDir = "images/equipment-photos/" + p.getId_equipement();
 
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-            return product_repo.save(p);
+            return savedProduct;
         } else {
             throw new IllegalArgumentException("Centre does not exist");
         }
     }
+
+    @Override
+    public String getImage(Long idProduit) {
+
+        Equipement eq = product_repo.findById(idProduit).get();
+        return eq.getPhotosImagePath();
+    }
+
 
 
 }

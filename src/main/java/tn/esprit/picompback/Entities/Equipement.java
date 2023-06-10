@@ -43,6 +43,10 @@ public class Equipement implements Serializable {
     Set<Promo> Promos ;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Feedback_Equipemet")
     Set<Feedback> Feedbacks ;
-
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null ) return null;
+        return "http://localhost:8082/CampProject/images/equipment-photos/" + id_equipement + "/" + photos;
+    }
 
 }
