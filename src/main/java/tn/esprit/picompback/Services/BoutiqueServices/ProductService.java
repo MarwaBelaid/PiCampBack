@@ -13,27 +13,26 @@ import java.util.Optional;
 public class ProductService implements IProductService {
 
     @Autowired
-    ProductRepo boutique_repo;
+    ProductRepo product_repo;
 
     @Autowired
     CentreCampRepository centreCamp_repo;
 
     @Override
     public List<Equipement> retrieveAllProducts() {
-        return boutique_repo.findAll();
+        return product_repo.findAll();
     }
     @Override
     public Equipement retrieveProduct(Long id) {
-        return boutique_repo.findById(id).get();
+        return product_repo.findById(id).get();
     }
 
     @Override
     public Equipement addProduct(Equipement p, Long idCentre) {
-        Optional<CentreCamp> optionalCentre = centreCamp_repo.findById(idCentre);
-        if (optionalCentre.isPresent()) {
-            CentreCamp centre = optionalCentre.get();
-            p.setEquipement_CentreCamp(centre);
-            return boutique_repo.save(p);
+        CentreCamp Centre = centreCamp_repo.findById(idCentre).orElse(null);
+        if (Centre !=null) {
+            p.setEquipement_CentreCamp(Centre);
+            return product_repo.save(p);
         } else {
             throw new IllegalArgumentException("Centre does not exist");
         }

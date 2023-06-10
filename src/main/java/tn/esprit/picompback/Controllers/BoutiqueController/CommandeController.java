@@ -16,8 +16,8 @@ public class CommandeController {
     private ICommandeService commande_service;
 
     @PostMapping("/passerCommande/{idProduit}/{idClient}")
-    public String PasserCommande(@RequestBody Commande c, @PathVariable Long idProduit,@PathVariable Long idClient, @RequestParam int qty) {
-         commande_service.PasserCommande(c,idProduit,idClient,qty);
+    public String PasserCommande(@PathVariable Long idProduit,@PathVariable Long idClient, @RequestParam int qty) {
+         commande_service.PasserCommande(idProduit,idClient,qty);
          return "commande passer";
     }
 
