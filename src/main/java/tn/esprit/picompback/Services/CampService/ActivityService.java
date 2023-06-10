@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.picompback.Entities.Activity;
 import tn.esprit.picompback.Entities.CentreCamp;
+import tn.esprit.picompback.Entities.DetailsActivity;
 import tn.esprit.picompback.Repositories.CampRepos.ActivityRepository;
 import tn.esprit.picompback.Repositories.CampRepos.CentreCampRepository;
+import tn.esprit.picompback.Repositories.CampRepos.DetailsActivityRepository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ActivityService implements IActivityService{
@@ -17,10 +21,19 @@ public class ActivityService implements IActivityService{
 
     @Autowired
     CentreCampRepository centreCampRepository ;
+    @Autowired
+    DetailsActivityRepository detailsActivityRepository ;
 
     @Override
     public Activity AjouterActivity(Activity a) {
-        return activityRepository.save(a);
+        activityRepository.save(a) ;
+        Set<DetailsActivity> da = new HashSet<>() ;
+        da=a.getDetailsActivity() ;
+        for (DetailsActivity d : da){
+            d.setActivity(a);
+            detailsActivityRepository.save(d);
+        }
+        return a;
     }
 
     @Override
@@ -44,16 +57,26 @@ public class ActivityService implements IActivityService{
     }
 
     @Override
-    public void AffecterActivityAuCentreCamp(long idActivity, long idCamp) {
-        CentreCamp camp =centreCampRepository.findById(idCamp).get() ;
-        Activity Act =activityRepository.findById(idActivity).get() ;
-        if(camp == null)
-            throw new IllegalArgumentException("Centre de camp " +  camp+ "non trouvé : " );
-        else if (Act == null)
-           throw new IllegalArgumentException("Activity " +  Act+ "non trouvé : " );
+    public String AffecterActivityAuCentreCamp(long idActivity, long idCamp) {
+        CentreCamp camp =centreCampRepository.findById(idCamp).orElseGet(() -> {
+            CentreCamp defaultCamp = new CentreCamp();
+            return defaultCamp;
+        });
+        Activity Act =activityRepository.findById(idActivity).orElseGet(() -> {
+            Activity defaultAct = new Activity();
+            return defaultAct;
+        });
+        System.out.println(camp);
+        if((!centreCampRepository.findById(idCamp).isPresent()) && (!activityRepository.findById(idActivity).isPresent()))
+            return  "Le Ce Centre de camp " +  idCamp+ " et L'Activity "+idActivity + " non trouvés " ;
+        if(!centreCampRepository.findById(idCamp).isPresent())
+            return  "le Centre de camp " +  idCamp+ " non trouvé " ;
+        if (!activityRepository.findById(idActivity).isPresent())
+            return "L'Activity " +  idActivity+ " non trouvé  " ;
         else {
             Act.setActivity_CentreCamp(camp);
             activityRepository.save(Act);
+            return "Affectation avec success" ;
         }
     }
 }

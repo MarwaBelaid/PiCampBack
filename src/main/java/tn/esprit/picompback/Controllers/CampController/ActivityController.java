@@ -31,7 +31,7 @@ public class ActivityController {
         activityService.updateActivity(a) ;
     }
 
-    @GetMapping("/Get-Only-Activity/{idActivity}")
+    @GetMapping("/GetOnlyActivity/{idActivity}")
     public Activity GetActivity(@PathVariable("idActivity") long id) {
         return activityService.GetActivity(id);
     }
@@ -41,10 +41,10 @@ public class ActivityController {
         activityService.DeleteActivity(id);
     }
 
-    @PutMapping("/Affecter-Activity-To-CentreCamp")
-    public void AffecterActivityAuCentreCamp(@PathVariable("idActivity") long idActivity, @PathVariable("idCamp")  long idCamp)
+    @PutMapping("/AffecterActivityToCentreCamp/{idActivity}/{idCamp}")
+    public String AffecterActivityAuCentreCamp(@PathVariable("idActivity") long idActivity, @PathVariable("idCamp")  long idCamp)
     {
-        activityService.AffecterActivityAuCentreCamp(idActivity,idCamp);
+        return activityService.AffecterActivityAuCentreCamp(idActivity,idCamp);
     }
 
 }
