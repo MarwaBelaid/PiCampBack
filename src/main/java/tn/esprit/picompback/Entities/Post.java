@@ -25,6 +25,7 @@ public class Post implements Serializable {
     String contenu;
     Date date_creation;
     Date date_last_update;
+    @Column(nullable = true, length = 64)
     private String imagePath; // Ajoutez cette ligne pour représenter le chemin de l'image
 
     public Long getId() {
@@ -59,33 +60,6 @@ public class Post implements Serializable {
         this.imagePath = imagePath;
     }
 
-//    @Size(max = 10 * 1024 * 1024, message = "La taille maximale du fichier est de 10 Mo")
-
-//    @Lob
-//    @Column(name = "picture", columnDefinition = "LONGBLOB")
-//     byte[] picture;
-//    public String getSujetPost() {
-//        return sujet_post;
-//    }
-//    public void setSujetPost(String sujetPost) {
-//        this.sujet_post = sujetPost;
-//    }
-//    public String getContenuPost() {
-//        return contenu_post;
-//    }
-//
-//    public void setContenuPost(String contenuPost) {
-//        this.contenu_post = contenuPost;
-//    }
-//    public byte[] getPicture() {
-//        return picture;
-//    }
-//
-//    public void setPicture(byte[] picture) {
-//        this.picture = picture;
-//    }
-
-
     @ManyToOne
     Utilisateurs post_utilisateurs ;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "favoris")
@@ -94,7 +68,11 @@ public class Post implements Serializable {
     Set<Commentaire> Commentaires ;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "signal_Post")
     Set<Signals> signals ;
-
+    @Transient
+    public String getPhotosImagePath() {
+        if (imagePath == null ) return null;
+        return "http://localhost:8082/CampProject/images/posts/" + id + "/" + imagePath;
+    }
 
 
 }
