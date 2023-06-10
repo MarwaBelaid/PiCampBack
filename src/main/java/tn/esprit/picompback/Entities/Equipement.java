@@ -31,6 +31,8 @@ public class Equipement implements Serializable {
     @Enumerated(EnumType.STRING)
     StatusEquipement status;
     int quantité_disponible;
+    @Column(nullable = true, length = 64)
+    private String photos;
 
     float prix;
     @JsonIgnore
