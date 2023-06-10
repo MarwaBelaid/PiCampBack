@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import tn.esprit.picompback.Entities.Activity;
+import tn.esprit.picompback.Entities.DetailsActivity;
 import tn.esprit.picompback.Entities.Enumeration.Statut;
 import tn.esprit.picompback.Entities.Reservation;
 import tn.esprit.picompback.Entities.Utilisateurs;
 import tn.esprit.picompback.Repositories.CampRepos.ActivityRepository;
+import tn.esprit.picompback.Repositories.CampRepos.DetailsActivityRepository;
 import tn.esprit.picompback.Repositories.CampRepos.ReservationRepository;
 import tn.esprit.picompback.Repositories.UserRepos.UtilisateurRepository;
 
@@ -24,6 +26,8 @@ public class ReservationService implements IReservationService{
 
     @Autowired
     ActivityRepository activityRepository ;
+    @Autowired
+    DetailsActivityRepository detailsActivityRepository ;
 
     public Set<Activity> VerifierAvtivities (Set<Activity> ListActivity, List<Long> idActivity)
     {
@@ -43,8 +47,7 @@ public class ReservationService implements IReservationService{
     public String AjouterReservation(Reservation Res,long idUser, List<Long> ListActivity) {
         Utilisateurs user = utilisateursRepository.findById(idUser).get() ;
         Boolean YesAdd = false ;
-        Set<Activity> ListAct = new HashSet<>();
-        Set<Activity> NewListAct = new HashSet<>();
+        Set<DetailsActivity> ListDetailAct = new HashSet<>();
         if(user == null)
         {
             throw new IllegalArgumentException("Utilisateur " +  user+ "non trouvé : " );
@@ -55,13 +58,16 @@ public class ReservationService implements IReservationService{
                  if(reservation.getStatut().equals(Statut.Refusée))
                 {
                    // Ajout
-                    for(Long idAct : ListActivity)
-                    {
-                        ListAct.add(activityRepository.findById(idAct).get()) ;
+
+                    for(Long iddetAct : ListActivity)
+                    {   DetailsActivity detailAct = detailsActivityRepository.findById(iddetAct).get() ;
+                        detailAct.setNbPlace(detailAct.getNbPlace()-Res.getNbr_personne());
+                        detailsActivityRepository.save(detailAct) ;
+                        ListDetailAct.add(detailAct) ;
                     }
                     YesAdd = true ;
                 }
-                else
+                 else
                 {   //Alert
                     throw new IllegalArgumentException("Vous avez une autre reservation au meme date " );
                 }
@@ -69,7 +75,7 @@ public class ReservationService implements IReservationService{
         }
         if(YesAdd == true) {
             Res.setReservation_utilisateur(user);
-            Res.setActivities(ListAct);
+            Res.setActivities(ListDetailAct);
             reservationRepository.save(Res);
             return new String("Ajout de la reservation avec succes") ;
         }

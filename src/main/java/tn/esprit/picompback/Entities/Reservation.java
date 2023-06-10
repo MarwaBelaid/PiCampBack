@@ -32,7 +32,7 @@ public class Reservation implements Serializable {
     Utilisateurs reservation_utilisateur ;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Activities_Reservation")
-    Set<Activity> Activities ;
+    Set<DetailsActivity> Activities ;
 
 
 
