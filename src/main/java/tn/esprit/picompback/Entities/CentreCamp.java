@@ -1,5 +1,6 @@
 package tn.esprit.picompback.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -29,6 +30,7 @@ public class CentreCamp implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Feedback_CentreCamp")
     Set<Feedback> Feedbacks ;
+    //@JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Activity_CentreCamp")
     Set<Activity> Activities ;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Equipement_CentreCamp")
