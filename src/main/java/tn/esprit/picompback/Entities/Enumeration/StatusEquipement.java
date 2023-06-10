@@ -1,5 +1,5 @@
 package tn.esprit.picompback.Entities.Enumeration;
 
-public enum Status {
+public enum StatusEquipement {
     disponible, non_disponible
 }

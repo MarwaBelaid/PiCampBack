@@ -2,11 +2,12 @@ package tn.esprit.picompback.Entities;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import tn.esprit.picompback.Entities.Enumeration.Status;
-import tn.esprit.picompback.Entities.Enumeration.TypeEquipement;
+import tn.esprit.picompback.Entities.Enumeration.StatusEquipement;
+import tn.esprit.picompback.Entities.Enumeration.CategorieEquipement;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -24,15 +25,17 @@ public class Equipement implements Serializable {
     String nom;
     String description;
     @Enumerated(EnumType.STRING)
-    TypeEquipement type;
+    CategorieEquipement type;
 
     @Enumerated(EnumType.STRING)
-    Status status;
+    StatusEquipement status;
     int quantité_disponible;
+
+    float prix;
+
+    Date max_date_location;
     @ManyToOne
     CentreCamp Equipement_CentreCamp ;
-    @ManyToMany(mappedBy="Equipements", cascade = CascadeType.ALL)
-    Set<Commande> Commandes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
     Set<Promo> Promos ;

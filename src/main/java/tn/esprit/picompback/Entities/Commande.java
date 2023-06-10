@@ -8,7 +8,9 @@ import tn.esprit.picompback.Entities.Enumeration.TypePaiement;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -23,12 +25,11 @@ public class Commande implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id_commande ;
-    Date date_achat_commande;
-    Date date_debut_location;
-    Date date_fin_location;
+    LocalDate date_achat_commande;
+    LocalDate date_debut_location;
+    LocalDate date_fin_location;
     float montant_total ;
-
-    int quantite;
+    int quantite_totale=0;
 
     @Enumerated(EnumType.STRING)
     EtatCommande etat ;
@@ -40,11 +41,18 @@ public class Commande implements Serializable {
     @ManyToOne
     Utilisateurs commande_utilisateur ;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    Set<Equipement> Equipements;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipement")
     Set<Promo> Promos ;
 
+    @OneToMany(mappedBy = "commande")
+    private Set<CommandeEquipement> commandeEquipements;
+
+    public Set<CommandeEquipement> getCommandeEquipements() {
+        if (commandeEquipements == null) {
+            commandeEquipements = new HashSet<>();
+        }
+        return commandeEquipements;
+    }
 
 }
