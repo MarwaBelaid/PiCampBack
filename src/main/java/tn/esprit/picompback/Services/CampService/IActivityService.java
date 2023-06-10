@@ -15,4 +15,7 @@ public interface IActivityService {
     Activity GetActivity(long id) ;
 
     void DeleteActivity(long id) ;
+    String AffecterActivityAuCentreCamp(long idActivity,long idCamp) ;
+
+
 }

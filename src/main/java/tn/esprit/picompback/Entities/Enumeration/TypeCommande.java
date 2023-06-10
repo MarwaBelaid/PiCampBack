@@ -1,4 +1,6 @@
 package tn.esprit.picompback.Entities.Enumeration;
 
-public enum TypeEquipement {
+public enum TypeCommande {
+
+    Location, Achat
 }
