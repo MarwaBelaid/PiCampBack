@@ -1,4 +1,4 @@
-package tn.esprit.picompback.Repositories;
+package tn.esprit.picompback.Repositories.PostRepos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
