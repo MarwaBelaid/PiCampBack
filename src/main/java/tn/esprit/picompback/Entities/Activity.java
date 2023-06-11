@@ -37,8 +37,7 @@ public class Activity implements Serializable {
     @ManyToOne
     CentreCamp Activity_CentreCamp ;
 
-
-   //@JsonIgnore
+    //@JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
     Set<DetailsActivity> DetailsActivity ;
 
