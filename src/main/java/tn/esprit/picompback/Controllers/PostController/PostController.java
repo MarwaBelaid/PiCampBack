@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.picompback.Entities.Enumeration.TypeCommande;
+import tn.esprit.picompback.Entities.Enumeration.TypePaiement;
 import tn.esprit.picompback.Entities.Equipement;
 import tn.esprit.picompback.Entities.Post;
 import tn.esprit.picompback.Repositories.PostRepos.IPostRepository;
@@ -46,5 +48,10 @@ public class PostController {
     public String deletePost(@PathVariable long id) {
         postService.deletePost(id);
         return "Post deleted successfuly";
+    }
+    @PutMapping("/like/{id}")
+    public String updateLike(@PathVariable Long id, @RequestParam boolean liked,@RequestBody long likes) {
+        postService.updateLike(id,liked,likes);
+        return "like mis a jour";
     }
 }

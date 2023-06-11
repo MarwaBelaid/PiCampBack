@@ -13,4 +13,5 @@ public interface IPostService {
     Optional<Post> getPostById(long id);
     List<Post> getAllPosts();
     void deletePost(long id);
+    void updateLike(long id,boolean liked,long likes);
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.picompback.Entities.CentreCamp;
+import tn.esprit.picompback.Entities.Commande;
 import tn.esprit.picompback.Entities.Equipement;
 import tn.esprit.picompback.Entities.Post;
 import tn.esprit.picompback.Repositories.PostRepos.IPostRepository;
@@ -44,5 +45,12 @@ public class PostService implements IPostService {
     @Override
     public void deletePost(long id) {
         postRepo.deleteById(id);
+    }
+    @Override
+    public void updateLike(long id,boolean liked,long likes){
+        Post p = postRepo.findById(id).orElse(null);
+        p.setLike(liked);
+        p.setNbLike(likes);
+        postRepo.save(p);
     }
 }

@@ -21,6 +21,8 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id ;
+    long nbLike;
+    boolean liked;
     String sujet ;
     String contenu;
     Date date_creation;
@@ -34,6 +36,12 @@ public class Post implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public void setLike(boolean liked) {
+        this.liked = liked;
+    }
+    public void setNbLike(long likes) {
+        this.nbLike = likes;
     }
 
     public String getSujet() {
