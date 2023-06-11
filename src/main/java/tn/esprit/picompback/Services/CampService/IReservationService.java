@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IReservationService {
 
-    String AjouterReservation(Reservation Res, long idUser, List<Long> ListActivity) ;
+    String AjouterReservation(Reservation Res, long idUser, List<Long> ListActivity, int nbNuit) ;
 
     List<Reservation> GetReservations() ;
 

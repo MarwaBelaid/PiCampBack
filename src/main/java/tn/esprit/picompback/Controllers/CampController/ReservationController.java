@@ -17,10 +17,11 @@ public class ReservationController {
     @Autowired
     IReservationService reservationService ;
 
-    @PostMapping("/add-Reservation/{idUser}/{ListActivity}")
+    @PostMapping("/add-Reservation/{idUser}/{ListActivity}/{nbNuit}")
     @ResponseBody
-    public String AjouterReservation(@RequestBody Reservation r, @PathVariable("idUser")  long idUser, @PathVariable("ListActivity")  List<Long> ListActivity) {
-        return  reservationService.AjouterReservation(r,idUser,ListActivity);
+    public String AjouterReservation(@RequestBody Reservation r, @PathVariable("idUser")  long idUser, @PathVariable("ListActivity")  List<Long> ListActivity, @PathVariable("nbNuit")  int nbNuit) {
+       return
+                reservationService.AjouterReservation(r,idUser,ListActivity,nbNuit);
 
     }
 
