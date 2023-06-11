@@ -24,16 +24,35 @@ public class ActivityService implements IActivityService{
     @Autowired
     DetailsActivityRepository detailsActivityRepository ;
 
+
     @Override
     public Activity AjouterActivity(Activity a) {
-        activityRepository.save(a) ;
+
         Set<DetailsActivity> da = new HashSet<>() ;
         da=a.getDetailsActivity() ;
-        for (DetailsActivity d : da){
-            d.setActivity(a);
-            detailsActivityRepository.save(d);
+        if(da != null) {
+
+             for (DetailsActivity d : da) {
+                d.setActivity(a);
+                //d.setReservations(new HashSet<>());
+                detailsActivityRepository.save(d);
+            }
+
+            a.setDetailsActivity(da);
+            ModifierIdDetails(a);
+            activityRepository.save(a);
         }
         return a;
+    }
+    public void ModifierIdDetails(Activity a)
+    {
+        int indiceMax = detailsActivityRepository.finMaxIdByActivity(a.getId_activity()) ;
+        int indice= indiceMax ;
+        for(DetailsActivity da : a.getDetailsActivity())
+        {
+            da.setIdDetailsActivity("A"+a.getId_activity()+"D"+(indiceMax-indice+1));
+            indice--;
+        }
     }
 
     @Override
@@ -48,7 +67,7 @@ public class ActivityService implements IActivityService{
 
     @Override
     public Activity GetActivity(long id) {
-        return activityRepository.findById(id).get();
+        return activityRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -58,20 +77,14 @@ public class ActivityService implements IActivityService{
 
     @Override
     public String AffecterActivityAuCentreCamp(long idActivity, long idCamp) {
-        CentreCamp camp =centreCampRepository.findById(idCamp).orElseGet(() -> {
-            CentreCamp defaultCamp = new CentreCamp();
-            return defaultCamp;
-        });
-        Activity Act =activityRepository.findById(idActivity).orElseGet(() -> {
-            Activity defaultAct = new Activity();
-            return defaultAct;
-        });
+        CentreCamp camp =centreCampRepository.findById(idCamp).orElse(null);
+        Activity Act =activityRepository.findById(idActivity).orElse(null);
         System.out.println(camp);
         if((!centreCampRepository.findById(idCamp).isPresent()) && (!activityRepository.findById(idActivity).isPresent()))
             return  "Le Ce Centre de camp " +  idCamp+ " et L'Activity "+idActivity + " non trouvés " ;
-        if(!centreCampRepository.findById(idCamp).isPresent())
+        else if(!centreCampRepository.findById(idCamp).isPresent())
             return  "le Centre de camp " +  idCamp+ " non trouvé " ;
-        if (!activityRepository.findById(idActivity).isPresent())
+        else if (!activityRepository.findById(idActivity).isPresent())
             return "L'Activity " +  idActivity+ " non trouvé  " ;
         else {
             Act.setActivity_CentreCamp(camp);

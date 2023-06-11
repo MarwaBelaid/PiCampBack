@@ -43,10 +43,81 @@ public class ReservationService implements IReservationService{
         }
         return list ;
     }
+
+    public Date MinDateAct (Set<DetailsActivity> ListDa)
+    {
+        Date minDate = null ;
+        for(DetailsActivity da :ListDa )
+        {
+            minDate = da.getDate() ;
+            if(da.getDate().compareTo(minDate) <= 0 )
+                minDate = da.getDate() ;
+        }
+
+        return minDate ;
+    }
+
+    public Date MaxDateAct (Set<DetailsActivity> ListDa)
+    {
+        Date maxDate = null ;
+        for(DetailsActivity da :ListDa )
+        {
+            maxDate = da.getDate() ;
+            if(da.getDate().compareTo(maxDate) >= 0 )
+                maxDate = da.getDate() ;
+        }
+
+        return maxDate ;
+    }
+    public boolean AddRes (Reservation Res, Utilisateurs user, List<Long> ListActivity, int nbNuit)
+    {
+        boolean add = false ;
+        Set<DetailsActivity> ListDa = new HashSet<>() ;
+        Set<Reservation> listRes = new HashSet<>() ;
+        float MontantTotal = 0;
+        if(nbNuit>0)
+            MontantTotal = nbNuit*(detailsActivityRepository.findById(ListActivity.get(0)).get().getActivity().getActivity_CentreCamp().getTarif_nuitee());
+        for(Long IdDa : ListActivity) {
+            DetailsActivity da = detailsActivityRepository.findById(IdDa).orElse(null);
+            if (da != null) {
+                if ((da.getNbPlace() + Res.getNbr_personne()) <= da.getActivity().getCapacite_max()) {
+                    da.setNbPlace(da.getNbPlace() + Res.getNbr_personne());
+                    ListDa.add(da);
+                }
+                listRes = da.getReservations() ;
+                MontantTotal = MontantTotal + (da.getActivity().getPrix() * Res.getNbr_personne());
+
+            Res.setReservation_utilisateur(user);
+            Res.setMontant_reservation(MontantTotal);
+            Res.setDate_debut(MinDateAct(ListDa));
+            Res.setDate_fin(MaxDateAct(ListDa));
+            listRes.add(Res) ;
+            reservationRepository.save(Res);
+            da.setReservations(listRes);
+            detailsActivityRepository.save(da) ;
+            add = true ;
+        }
+            else
+                System.out.println(IdDa +" n'existe pas");
+        }
+      return  add ;
+    }
     @Override
-    public String AjouterReservation(Reservation Res,long idUser, List<Long> ListActivity) {
-        Utilisateurs user = utilisateursRepository.findById(idUser).get() ;
+    public String AjouterReservation(Reservation Res,long idUser, List<Long> ListActivity,int nbNuit) {
+        Utilisateurs user = utilisateursRepository.findById(idUser).orElse(null);
+
+        if (user == null) {
+            return "Utilisateur " + idUser + " non trouvé : ";
+        }
+        else if (reservationRepository.findReservationsByUtilisateur(idUser) == 0) {
+                if (AddRes(Res, user, ListActivity, nbNuit) == true)
+                    return "Ajout";
+        }
+        return "verif";
+    }
+       /*
         Boolean YesAdd = false ;
+        //float
         Set<DetailsActivity> ListDetailAct = new HashSet<>();
         if(user == null)
         {
@@ -70,17 +141,20 @@ public class ReservationService implements IReservationService{
                  else
                 {   //Alert
                     throw new IllegalArgumentException("Vous avez une autre reservation au meme date " );
+
                 }
             }
         }
         if(YesAdd == true) {
             Res.setReservation_utilisateur(user);
             Res.setActivities(ListDetailAct);
+            Res.setStatut(Statut.Déposée);
             reservationRepository.save(Res);
             return new String("Ajout de la reservation avec succes") ;
         }
-        return new String("echec d'ajout") ;
-    }
+        else
+        return new String("echec d'ajout") ;*/
+
 
     @Override
     public List<Reservation> GetReservations() {

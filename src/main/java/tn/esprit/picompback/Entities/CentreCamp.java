@@ -12,7 +12,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+//@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class CentreCamp implements Serializable {
