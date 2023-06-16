@@ -1,5 +1,6 @@
 package tn.esprit.picompback.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -69,6 +70,7 @@ public class Post implements Serializable {
     }
 
     @ManyToOne
+    @JsonIgnore
     Utilisateurs post_utilisateurs ;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "favoris")
     Set<Utilisateurs> utilisateursFavoris;

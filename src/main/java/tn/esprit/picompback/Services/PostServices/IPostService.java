@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IPostService {
-    Post addPost(Post p, MultipartFile multipartFile) throws IOException;
+    Post addPost(Post p, MultipartFile multipartFile, long idUser) throws IOException;
     Optional<Post> getPostById(long id);
     List<Post> getAllPosts();
     void deletePost(long id);
