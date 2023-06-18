@@ -61,17 +61,35 @@ public class CommandeService implements ICommandeService {
                     c.setType_commande(null);
                     c.setType_paiement(null);
                     commandeEquipement.setCommande(c);
+                    commandeEquipement.setQuantite_produit(qty);
                     commande_repo.save(c);
                     commande_equipement_repo.save(commandeEquipement);
 
                 }else{
-                    //ajouter quantiter to commande_equipement si le meme produit existe
+
+
                     CommandeEquipement commandeEquipement = commande_equipement_repo.findCommandeEquipemet(commandeExist.getId_commande(),idProduit);
-                    int totale_qty = commandeEquipement.getQuantite_produit()+qty;
-                    commandeEquipement.setQuantite_produit(totale_qty);
-                    commandeEquipement.setCommande(commandeExist);
-                    //update ligne commande_equipement si le meme produit existe
-                    commande_equipement_repo.save(commandeEquipement);
+                    //ajouter commande_equipement si un produit est ajouter au commande
+                    if(commandeEquipement ==null){
+
+                        CommandeEquipement cmdEq = new CommandeEquipement();
+                        if(equipement.getStatus() == StatusEquipement.disponible){
+                            cmdEq.setEquipement(equipement);
+                        }else {
+                            throw new IllegalArgumentException("Equipement non disponible" );
+                        }
+                        cmdEq.setCommande(commandeExist);
+                        cmdEq.setQuantite_produit(qty);
+                        commande_equipement_repo.save(cmdEq);
+
+                    }else{
+                        int totale_qty = commandeEquipement.getQuantite_produit()+qty;
+                        commandeEquipement.setQuantite_produit(totale_qty);
+                        commandeEquipement.setCommande(commandeExist);
+                        //update ligne commande_equipement si le meme produit existe
+                        commande_equipement_repo.save(commandeEquipement);
+                    }
+
                 }
             } else {
                 throw new IllegalArgumentException("Equipement with ID " + idProduit + " does not exist");
