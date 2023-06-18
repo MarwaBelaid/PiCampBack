@@ -3,9 +3,12 @@ package tn.esprit.picompback.Entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import java.util.HashSet;
 
 @Getter
 @Setter
@@ -14,25 +17,39 @@ import java.util.Set;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@Table(name="users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email_user")
+})
 public class Utilisateurs implements Serializable {
 
 
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 long id_user ;
-String nom_user ;
-String prenom_user ;
-
+@NotBlank
+@Size(max = 20)
+String username;
+@NotBlank
+@Size(max = 50)
 String email_user ;
-String mdp_user ;
+@NotBlank
+@Size(max = 20)
+String password_user;
 String adresse_user;
 String tel_user;
 Date date_naiss_user;
 byte[] photo_user;
 Date date_inscription;
 
-@ManyToOne
-Role role_user ;
+
+@ManyToMany(fetch = FetchType.LAZY)
+@JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+private Set<Role> roles = new HashSet<>();
+
+
 
 @ManyToOne
 Meteo meteo ;
