@@ -24,7 +24,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public List<Equipement> search(@RequestParam float priceMin,@RequestParam float priceMax,@RequestParam SizeEquipement size,@RequestParam ColorEquipement color,@RequestParam CategorieEquipement catg) {
+    public List<Equipement> search(@RequestParam(defaultValue = "0",required = false) float priceMin,@RequestParam(defaultValue = "15000",required = false) float priceMax,@RequestParam(required = false) SizeEquipement size,@RequestParam(required = false) ColorEquipement color,@RequestParam(required = false) CategorieEquipement catg) {
         return product_service.search( priceMin,  priceMax,  size,  color,  catg);
     }
     @GetMapping("/{id}")

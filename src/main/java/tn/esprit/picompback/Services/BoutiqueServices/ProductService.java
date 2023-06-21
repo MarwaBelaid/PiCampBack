@@ -63,6 +63,7 @@ public class ProductService implements IProductService {
 
     @Override
     public List<Equipement> search(float priceMin, float priceMax, SizeEquipement size, ColorEquipement color, CategorieEquipement catg){
+        logger.info("*************************In method " + priceMin + " : " + priceMax);
         return product_repo.searchProducts(priceMin,  priceMax,  size,  color,  catg);
     }
 
