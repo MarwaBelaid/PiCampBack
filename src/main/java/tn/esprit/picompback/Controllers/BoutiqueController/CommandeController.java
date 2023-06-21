@@ -1,5 +1,6 @@
 package tn.esprit.picompback.Controllers.BoutiqueController;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.picompback.Entities.Commande;
@@ -16,7 +17,7 @@ public class CommandeController {
     private ICommandeService commande_service;
 
     @PostMapping("/passerCommande/{idProduit}/{idClient}")
-    public String PasserCommande(@PathVariable Long idProduit,@PathVariable Long idClient, @RequestParam int qty) {
+    public String PasserCommande(@PathVariable Long idProduit,@PathVariable Long idClient, @RequestParam(value = "qty", required = false) Integer qty) {
          commande_service.PasserCommande(idProduit,idClient,qty);
          return "commande passer";
     }
