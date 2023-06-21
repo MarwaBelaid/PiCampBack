@@ -38,5 +38,11 @@ public class CommentService implements ICommentService {
             return savedComment;
 
     }
+    @Override
+    public List<Commentaire> getCommentByIdPost(long idPost) {
+        return commentRepository.findByPostComentId(idPost);
+    }
+
+
 
 }

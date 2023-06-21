@@ -10,6 +10,8 @@ import tn.esprit.picompback.Services.CommentServices.ICommentService;
 import tn.esprit.picompback.Services.PostServices.IPostService;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/comments")
@@ -20,5 +22,10 @@ public class CommentController {
     @PostMapping(value = "/create/{idUser}/{idPost}")
     public Commentaire addComment(@RequestBody Commentaire c, @PathVariable ("idUser") long idUser,@PathVariable ("idPost") long idPost) throws IOException {
         return commentService.addComment(c,idUser,idPost);
+    }
+    @GetMapping("/get/all/{idPost}")
+    public List<Commentaire> getAllCommentByPost(@PathVariable ("idPost") long idPost) {
+        return commentService.getCommentByIdPost(idPost);
+
     }
 }

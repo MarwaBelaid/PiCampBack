@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface ICommentService {
     Commentaire addComment(Commentaire c, long idUser,long idPost) throws IOException;
-
+    List<Commentaire> getCommentByIdPost(long idPost);
 }
