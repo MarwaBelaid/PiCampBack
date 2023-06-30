@@ -1,4 +1,4 @@
-package tn.esprit.picompback.Services.CampService;
+package tn.esprit.picompback.Services.CampService.InterfaceService;
 
 import tn.esprit.picompback.Entities.Activity;
 

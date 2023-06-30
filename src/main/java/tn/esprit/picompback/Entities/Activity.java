@@ -3,6 +3,7 @@ package tn.esprit.picompback.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import tn.esprit.picompback.Entities.Enumeration.EtatActivityCentreCamp;
 import tn.esprit.picompback.Entities.Enumeration.TypeActivity;
 
 import javax.persistence.*;
@@ -32,6 +33,8 @@ public class Activity implements Serializable {
     int age_min = 0 ;
     @Enumerated(EnumType.STRING)
     TypeActivity type ;
+
+
     Byte[] photo ;
     @JsonIgnore
     @ManyToOne

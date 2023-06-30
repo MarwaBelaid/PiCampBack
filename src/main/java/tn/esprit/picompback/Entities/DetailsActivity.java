@@ -3,6 +3,7 @@ package tn.esprit.picompback.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import tn.esprit.picompback.Entities.Enumeration.EtatActivityCentreCamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,7 +27,8 @@ public class DetailsActivity implements Serializable {
     LocalTime heure_debut ;
     LocalTime heure_fin;
     Date date ;
-
+    @Enumerated(EnumType.STRING)
+    EtatActivityCentreCamp etatActivity;
     int nbPlace ;
 
     @JsonIgnore
