@@ -43,6 +43,11 @@ public class CommentService implements ICommentService {
         return commentRepository.findByPostComentId(idPost);
     }
 
-
+    @Override
+    public void updateLike(long id,boolean liked){
+        Commentaire m = commentRepository.findById(id).orElse(null);
+        m.setLike(liked);
+        commentRepository.save(m);
+    }
 
 }

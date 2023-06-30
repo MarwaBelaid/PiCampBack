@@ -28,4 +28,9 @@ public class CommentController {
         return commentService.getCommentByIdPost(idPost);
 
     }
+    @PutMapping("/like/{id}")
+    public String updateLike(@PathVariable Long id, @RequestParam boolean liked) {
+        commentService.updateLike(id,liked);
+        return "like mis a jour";
+    }
 }

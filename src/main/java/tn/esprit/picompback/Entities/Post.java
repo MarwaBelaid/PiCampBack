@@ -78,6 +78,8 @@ public class Post implements Serializable {
     Set<Commentaire> Commentaires ;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "signal_Post")
     Set<Signals> signals ;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy="post")
+//    private Set<Like> likes;
     @Transient
     public String getPhotosImagePath() {
         if (imagePath == null ) return null;

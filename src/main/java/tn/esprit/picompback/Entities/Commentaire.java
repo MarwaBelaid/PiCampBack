@@ -23,13 +23,15 @@ public class Commentaire implements Serializable {
     long id_commentaire ;
 
     String contenu_commentaire ;
-
+    boolean liked;
     Date date_creation ;
 
     Date date_last_update;
-
+    public void setLike(boolean liked) {
+        this.liked = liked;
+    }
     @ManyToOne
-    @JsonIgnore
+
     Utilisateurs coment_utilisateurs ;
     @ManyToOne
     @JsonIgnore

@@ -42,7 +42,7 @@ public class PostService implements IPostService {
     public Optional<Post> getPostById (long id){
         return postRepo.findById(id);
     }
-    @Override
+    @Override()
     public List<Post> getAllPosts() {
         return postRepo.findAll();
     }
