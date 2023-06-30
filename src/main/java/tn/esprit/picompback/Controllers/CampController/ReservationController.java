@@ -2,11 +2,13 @@ package tn.esprit.picompback.Controllers.CampController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.picompback.Entities.Activity;
 import tn.esprit.picompback.Entities.Reservation;
-import tn.esprit.picompback.Entities.Utilisateurs;
-import tn.esprit.picompback.Services.CampService.IReservationService;
+import tn.esprit.picompback.Services.CampService.InterfaceService.IReservationService;
+import tn.esprit.picompback.Utils.Utillity;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -19,9 +21,12 @@ public class ReservationController {
 
     @PostMapping("/add-Reservation/{idUser}/{ListActivity}/{nbNuit}")
     @ResponseBody
-    public String AjouterReservation(@RequestBody Reservation r, @PathVariable("idUser")  long idUser, @PathVariable("ListActivity")  List<Long> ListActivity, @PathVariable("nbNuit")  int nbNuit) {
-       return
-                reservationService.AjouterReservation(r,idUser,ListActivity,nbNuit);
+    public void AjouterReservation(@RequestBody Reservation r, @PathVariable("idUser")  long idUser, @PathVariable("ListActivity")  List<Long> ListActivity, @PathVariable("nbNuit")  int nbNuit, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+
+
+        reservationService.AjouterReservation(r,idUser,ListActivity,nbNuit);
+       // String SiteURL = Utillity.getSiteURL(request) ;
+       // reservationService.sendConfirmationEmail(r,SiteURL) ;
 
     }
 
