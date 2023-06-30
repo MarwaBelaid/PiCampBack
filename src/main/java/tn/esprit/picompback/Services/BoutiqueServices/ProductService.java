@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.picompback.Entities.*;
+import tn.esprit.picompback.Entities.Enumeration.CategorieEquipement;
+import tn.esprit.picompback.Entities.Enumeration.ColorEquipement;
+import tn.esprit.picompback.Entities.Enumeration.SizeEquipement;
 import tn.esprit.picompback.Repositories.BoutiqueRepos.*;
 import tn.esprit.picompback.Repositories.CampRepos.CentreCampRepository;
 import tn.esprit.picompback.Utils.FileUploadUtil;
@@ -58,6 +61,10 @@ public class ProductService implements IProductService {
         return eq.getPhotosImagePath();
     }
 
-
+    @Override
+    public List<Equipement> search(float priceMin, float priceMax, SizeEquipement size, ColorEquipement color, CategorieEquipement catg){
+        logger.info("*************************In method " + priceMin + " : " + priceMax);
+        return product_repo.searchProducts(priceMin,  priceMax,  size,  color,  catg);
+    }
 
 }

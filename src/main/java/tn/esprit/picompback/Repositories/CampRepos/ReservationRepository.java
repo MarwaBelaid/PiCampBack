@@ -25,9 +25,68 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
 
     /*
-    - Récupéer toutes les activiter par centre de camp
+    - Récupéer toutes les activiteé par centre de camp
     - Récuper les activité disponible nb place et dates
     -- Verifier conflit heure
 
+     */
+
+    /*
+    ************* Cycle de vie d'une reservation *******************
+
+    ***** Client **********
+
+    1- Bouton : Resarver -> Resarvation d'une seule Activitée.
+
+    2- Bouton : Créer une reservation -> Resarvation d'une liste des activitées
+    (Avec nuité ou pas => Ajouter oui ou non) -> ajouter les équipements de dormir .
+
+    * => Confirmer la reservation par mail
+    * => Envoyer mail pour le camp manager
+
+    3- Bouton : Modifier une reservation.
+
+    4- Bouton : Annuler une reservation.
+
+    5- Bouton : Consulter une reservation.
+
+    6- Bouton : Search selon des filtre de recherche.
+
+    ***** Camp manager *******
+
+    1- Bouton : Accepter une reservation => Envoyer la réponse par mail.
+
+    2- Bouton : Refuser une reservation => Envoyer la réponse par mail.
+
+    3- Bouton : Suivre les reservations.
+
+    4- Bouton : Consulter une reservation.
+
+    5- Bouton : Search selon des filtre de recherche.
+
+    * **************
+
+    1- Bouton : Ajouter centre de camp.
+
+    2- Bouton : Modifier centre de camp : affecter des equipements .
+
+
+
+
+    ***** Admin *******
+
+    1- Bouton : supprimer centre de camp.
+
+
+
+
+  ******************** Accueil *******************
+
+   ***** Client **********
+
+    * Afficher : Liste des prochaine évenement : Activity.
+    * Afficher : Liste des centres des camps (Kpi historique de recherche).
+    * Afficher : Liste des activitées disponible prochainement.
+    * Notifier le client si il ya une nouvelle activitée
      */
 }

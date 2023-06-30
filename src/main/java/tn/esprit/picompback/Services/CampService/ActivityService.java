@@ -8,13 +8,14 @@ import tn.esprit.picompback.Entities.DetailsActivity;
 import tn.esprit.picompback.Repositories.CampRepos.ActivityRepository;
 import tn.esprit.picompback.Repositories.CampRepos.CentreCampRepository;
 import tn.esprit.picompback.Repositories.CampRepos.DetailsActivityRepository;
+import tn.esprit.picompback.Services.CampService.InterfaceService.IActivityService;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
-public class ActivityService implements IActivityService{
+public class ActivityService implements IActivityService {
 
     @Autowired
     ActivityRepository activityRepository ;
@@ -34,7 +35,6 @@ public class ActivityService implements IActivityService{
 
              for (DetailsActivity d : da) {
                 d.setActivity(a);
-                //d.setReservations(new HashSet<>());
                 detailsActivityRepository.save(d);
             }
 

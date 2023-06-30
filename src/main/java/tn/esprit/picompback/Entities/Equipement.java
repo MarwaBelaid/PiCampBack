@@ -3,6 +3,8 @@ package tn.esprit.picompback.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import tn.esprit.picompback.Entities.Enumeration.ColorEquipement;
+import tn.esprit.picompback.Entities.Enumeration.SizeEquipement;
 import tn.esprit.picompback.Entities.Enumeration.StatusEquipement;
 import tn.esprit.picompback.Entities.Enumeration.CategorieEquipement;
 
@@ -35,6 +37,11 @@ public class Equipement implements Serializable {
     private String photos;
 
     float prix;
+    @Enumerated(EnumType.STRING)
+    SizeEquipement size;
+    @Enumerated(EnumType.STRING)
+    ColorEquipement color;
+
     @JsonIgnore
     @ManyToOne
     CentreCamp Equipement_CentreCamp ;
