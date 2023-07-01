@@ -3,6 +3,7 @@ package tn.esprit.picompback.Entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import java.util.HashSet;
 @Entity
 @Table(name="users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "email_user")
+        @UniqueConstraint(columnNames = "email")
 })
 public class Utilisateurs implements Serializable {
 
@@ -32,9 +33,10 @@ long id_user ;
 String username;
 @NotBlank
 @Size(max = 50)
-String email_user ;
-@NotBlank
-@Size(max = 20)
+@Email
+String email ;
+//@NotBlank
+
 String password_user;
 String adresse_user;
 String tel_user;
@@ -43,7 +45,7 @@ byte[] photo_user;
 Date date_inscription;
 
 
-@ManyToMany(fetch = FetchType.LAZY)
+@ManyToMany
 @JoinTable(  name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -81,5 +83,15 @@ Set<Reservation> Reservations ;
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande_utilisateur")
 Set<Commande> Commandes ;
 
+
+   /* public Utilisateurs(String username, String email, String encode) {
+
+    }*/
+
+    public Utilisateurs(String username, String email, String password_user) {
+        this.username = username;
+        this.email = email;
+        this.password_user = password_user;
+    }
 
 }

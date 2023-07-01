@@ -21,7 +21,7 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_role;
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
+
     role_enum name;
 }
 

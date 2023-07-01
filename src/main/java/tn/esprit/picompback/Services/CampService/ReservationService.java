@@ -11,7 +11,7 @@ import tn.esprit.picompback.Entities.Utilisateurs;
 import tn.esprit.picompback.Repositories.CampRepos.ActivityRepository;
 import tn.esprit.picompback.Repositories.CampRepos.DetailsActivityRepository;
 import tn.esprit.picompback.Repositories.CampRepos.ReservationRepository;
-import tn.esprit.picompback.Repositories.UserRepos.UtilisateurRepository;
+import tn.esprit.picompback.Repositories.UserRepository;
 
 import java.util.*;
 
@@ -22,7 +22,7 @@ public class ReservationService implements IReservationService{
     ReservationRepository reservationRepository ;
 
     @Autowired
-    UtilisateurRepository utilisateursRepository ;
+    UserRepository utilisateursRepository ;
 
     @Autowired
     ActivityRepository activityRepository ;
