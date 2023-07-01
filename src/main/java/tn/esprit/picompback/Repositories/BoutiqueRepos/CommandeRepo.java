@@ -10,4 +10,5 @@ public interface CommandeRepo extends JpaRepository<Commande,Long> {
     @Query("SELECT c FROM Commande c WHERE c.commande_utilisateur.id_user = :clientId AND c.etat = :etatCommande")
     Commande findByCommandeUtilisateurIdAndEtat(@Param("clientId") Long clientId, @Param("etatCommande") EtatCommande etatCommande);
 
+
 }
