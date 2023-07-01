@@ -1,21 +1,22 @@
 package tn.esprit.picompback.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
+
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@ToString
 public class CentreCamp implements Serializable {
 
     @Id
@@ -27,6 +28,20 @@ public class CentreCamp implements Serializable {
     String email_centre;
     float tarif_nuitee;
     int places_disponibles;
-    Byte[] photos_centre ;
+
+    @Column( length = 10000)
+    //@Lob
+    String photos_centre ;
+    //@JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Feedback_CentreCamp")
+    Set<Feedback> Feedbacks ;
+    //@JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Activity_CentreCamp")
+    Set<Activity> Activities ;
+    //@JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Equipement_CentreCamp")
+    Set<Equipement> Equipements ;
+
+
 
 }

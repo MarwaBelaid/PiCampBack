@@ -2,13 +2,10 @@ package tn.esprit.picompback.Entities;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import tn.esprit.picompback.Entities.Enumeration.role_enum;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -17,12 +14,14 @@ import java.util.Date;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Favoris implements Serializable {
+@Table(name="roles")
+public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id_favoris ;
+    private long id_role;
+    @Enumerated(EnumType.STRING)
 
-    Date date_favoris ;
-
+    role_enum name;
 }
+

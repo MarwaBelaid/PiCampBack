@@ -1,5 +1,6 @@
 package tn.esprit.picompback.Entities.Enumeration;
 
-public enum Role {
-    Admin,Manager,Client
+public enum TypeCommande {
+
+    Location, Achat
 }

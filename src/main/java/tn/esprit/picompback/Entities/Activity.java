@@ -1,13 +1,17 @@
 package tn.esprit.picompback.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import tn.esprit.picompback.Entities.Enumeration.EtatActivityCentreCamp;
 import tn.esprit.picompback.Entities.Enumeration.TypeActivity;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,16 +28,21 @@ public class Activity implements Serializable {
     String nom_activity;
     String description ;
     float prix ;
-    Time heure_debut ;
-    Time heure_fin;
-    Date date ;
     int capacite_min ;
     int capacite_max ;
-    int age_min ;
+    int age_min = 0 ;
     @Enumerated(EnumType.STRING)
     TypeActivity type ;
-    Byte[] photo ;
 
+
+    Byte[] photo ;
+    @JsonIgnore
+    @ManyToOne
+    CentreCamp Activity_CentreCamp ;
+
+    //@JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
+    Set<DetailsActivity> DetailsActivity ;
 
 
 }

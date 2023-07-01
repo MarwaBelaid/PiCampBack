@@ -1,5 +1,6 @@
 package tn.esprit.picompback.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import tn.esprit.picompback.Entities.Enumeration.Statut;
@@ -7,6 +8,7 @@ import tn.esprit.picompback.Entities.Enumeration.Statut;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,6 +28,27 @@ public class Reservation implements Serializable {
     float montant_reservation;
     @Enumerated(EnumType.STRING)
     Statut statut ;
+
+    boolean Confirmation;
+    @JsonIgnore
+    @ManyToOne
+    Utilisateurs reservation_utilisateur ;
+
+   // @OneToMany(cascade = CascadeType.ALL, mappedBy = "Activities_Reservation")
+    //Set<DetailsActivity> Activities ;
+
+    //@ManyToMany(fetch = FetchType.EAGER)
+    //Set<DetailsActivity> Activities;
+
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "reservation_details",
+            joinColumns = @JoinColumn(name = "reservation_id"),
+            inverseJoinColumns = @JoinColumn(name = "details_id")
+    )
+    Set<DetailsActivity> detailsActivities;
+
 
 
 }

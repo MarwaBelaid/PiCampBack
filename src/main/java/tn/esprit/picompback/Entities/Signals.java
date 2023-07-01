@@ -4,10 +4,7 @@ package tn.esprit.picompback.Entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -25,6 +22,13 @@ public class Signals implements Serializable {
     long id_signal ;
     String motif_signal;
     Date date_signal ;
+    @ManyToOne
+    Utilisateurs signal_utilisateur ;
+    @ManyToOne
+    Post signal_Post ;
+
+
+
 
 
 }
