@@ -1,5 +1,6 @@
 package tn.esprit.picompback.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -22,20 +23,26 @@ public class Commentaire implements Serializable {
     long id_commentaire ;
 
     String contenu_commentaire ;
-
+    boolean liked;
     Date date_creation ;
 
     Date date_last_update;
-
+    public void setLike(boolean liked) {
+        this.liked = liked;
+    }
     @ManyToOne
+
     Utilisateurs coment_utilisateurs ;
     @ManyToOne
+    @JsonIgnore
     Post post_coment ;
 
     @ManyToOne
+    @JsonIgnore
     Commentaire Response;
 
     @OneToMany(mappedBy = "Response", cascade = CascadeType.ALL)
     Set<Commentaire> Responses ;
+
 
 }

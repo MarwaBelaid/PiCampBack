@@ -1,5 +1,6 @@
 package tn.esprit.picompback.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
@@ -54,34 +55,47 @@ private Set<Role> roles = new HashSet<>();
 
 
 @ManyToOne
+@JsonIgnore
 Meteo meteo ;
 
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "post_utilisateurs")
+@JsonIgnore
 Set<Post> Posts ;
 
 @ManyToMany(cascade = CascadeType.ALL)
+@JsonIgnore
 Set<Post> favoris ;
 
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "coment_utilisateurs")
+        @JsonIgnore
 Set<Commentaire> Commentaires ;
 
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "user_qui_a_reclamer")
+@JsonIgnore
 Set<Reclamation> Reclamation_by_user ;
 
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "user_qui_a_traiter_reclamation")
+@JsonIgnore
 Set<Reclamation> Reclamation_traite ;
 
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "feedback_utilisateur")
+@JsonIgnore
 Set<Feedback> Feedbacks ;
 
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "signal_utilisateur")
+@JsonIgnore
 Set<Signals> signals ;
 
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservation_utilisateur")
+@JsonIgnore
 Set<Reservation> Reservations ;
 
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande_utilisateur")
+@JsonIgnore
 Set<Commande> Commandes ;
+
+//@OneToOne(mappedBy="likeuser")
+//private Like like;
 
 
    /* public Utilisateurs(String username, String email, String encode) {

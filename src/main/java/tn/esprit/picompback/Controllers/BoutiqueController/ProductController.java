@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.picompback.Entities.Enumeration.CategorieEquipement;
+import tn.esprit.picompback.Entities.Enumeration.ColorEquipement;
+import tn.esprit.picompback.Entities.Enumeration.SizeEquipement;
 import tn.esprit.picompback.Entities.Equipement;
 import tn.esprit.picompback.Services.BoutiqueServices.IProductService;
 
@@ -20,6 +23,10 @@ public class ProductController {
         return product_service.retrieveAllProducts();
     }
 
+    @GetMapping("/search")
+    public List<Equipement> search(@RequestParam(defaultValue = "0",required = false) float priceMin,@RequestParam(defaultValue = "15000",required = false) float priceMax,@RequestParam(required = false) SizeEquipement size,@RequestParam(required = false) ColorEquipement color,@RequestParam(required = false) CategorieEquipement catg) {
+        return product_service.search( priceMin,  priceMax,  size,  color,  catg);
+    }
     @GetMapping("/{id}")
     public Equipement getProduitById(@PathVariable Long id) {
         return product_service.retrieveProduct(id);

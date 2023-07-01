@@ -3,7 +3,7 @@ package tn.esprit.picompback.Controllers.CampController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.picompback.Entities.Activity;
-import tn.esprit.picompback.Services.CampService.IActivityService;
+import tn.esprit.picompback.Services.CampService.InterfaceService.IActivityService;
 
 import java.util.List;
 

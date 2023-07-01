@@ -29,6 +29,7 @@ public class Reservation implements Serializable {
     @Enumerated(EnumType.STRING)
     Statut statut ;
 
+    boolean Confirmation;
     @JsonIgnore
     @ManyToOne
     Utilisateurs reservation_utilisateur ;

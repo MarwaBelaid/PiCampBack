@@ -1,22 +1,31 @@
 package tn.esprit.picompback.Services.CampService;
 
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import tn.esprit.picompback.Entities.Activity;
 import tn.esprit.picompback.Entities.DetailsActivity;
-import tn.esprit.picompback.Entities.Enumeration.Statut;
+import tn.esprit.picompback.Entities.Enumeration.EtatActivityCentreCamp;
 import tn.esprit.picompback.Entities.Reservation;
 import tn.esprit.picompback.Entities.Utilisateurs;
 import tn.esprit.picompback.Repositories.CampRepos.ActivityRepository;
 import tn.esprit.picompback.Repositories.CampRepos.DetailsActivityRepository;
 import tn.esprit.picompback.Repositories.CampRepos.ReservationRepository;
 import tn.esprit.picompback.Repositories.UserRepository;
+import tn.esprit.picompback.Repositories.UserRepos.UtilisateurRepository;
+import tn.esprit.picompback.Services.CampService.InterfaceService.IReservationService;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
+@Slf4j
 @Service
-public class ReservationService implements IReservationService{
+public class ReservationService implements IReservationService {
 
     @Autowired
     ReservationRepository reservationRepository ;
@@ -29,6 +38,10 @@ public class ReservationService implements IReservationService{
     @Autowired
     DetailsActivityRepository detailsActivityRepository ;
 
+    @Autowired
+    JavaMailSender MailSender ;
+
+    // Vérifier si les identifiants d'activtée existe dans la base de donnée
     public Set<Activity> VerifierAvtivities (Set<Activity> ListActivity, List<Long> idActivity)
     {
         Set<Activity> list = new HashSet<>() ;
@@ -44,6 +57,15 @@ public class ReservationService implements IReservationService{
         return list ;
     }
 
+    // Modifier l'etat d'une vers complet
+    public void UpdateEtatActivity (DetailsActivity da)
+    {
+        if(da.getNbPlace()==0)
+            da.setEtatActivity(EtatActivityCentreCamp.Complet);
+        detailsActivityRepository.save(da) ;
+    }
+
+    // Récupérer la date d'activité la plus récente du reservation
     public Date MinDateAct (Set<DetailsActivity> ListDa)
     {
         Date minDate = null ;
@@ -57,6 +79,7 @@ public class ReservationService implements IReservationService{
         return minDate ;
     }
 
+    // Récupérer la maximum date d'activité du reservation
     public Date MaxDateAct (Set<DetailsActivity> ListDa)
     {
         Date maxDate = null ;
@@ -69,6 +92,8 @@ public class ReservationService implements IReservationService{
 
         return maxDate ;
     }
+
+    // Ajouter une reservation simple
     public boolean AddRes (Reservation Res, Utilisateurs user, List<Long> ListActivity, int nbNuit)
     {
         boolean add = false ;
@@ -91,6 +116,7 @@ public class ReservationService implements IReservationService{
             Res.setMontant_reservation(MontantTotal);
             Res.setDate_debut(MinDateAct(ListDa));
             Res.setDate_fin(MaxDateAct(ListDa));
+            Res.setConfirmation(false);
             listRes.add(Res) ;
             reservationRepository.save(Res);
             da.setReservations(listRes);
@@ -115,45 +141,35 @@ public class ReservationService implements IReservationService{
         }
         return "verif";
     }
-       /*
-        Boolean YesAdd = false ;
-        //float
-        Set<DetailsActivity> ListDetailAct = new HashSet<>();
-        if(user == null)
-        {
-            throw new IllegalArgumentException("Utilisateur " +  user+ "non trouvé : " );
-        }
-        else {
-            for(Reservation reservation : reservationRepository.findReservationByReservation_utilisateurAndActitvity(idUser, Res.getDate_debut(), Res.getDate_fin() ))
-            {
-                 if(reservation.getStatut().equals(Statut.Refusée))
-                {
-                   // Ajout
 
-                    for(Long iddetAct : ListActivity)
-                    {   DetailsActivity detailAct = detailsActivityRepository.findById(iddetAct).get() ;
-                        detailAct.setNbPlace(detailAct.getNbPlace()-Res.getNbr_personne());
-                        detailsActivityRepository.save(detailAct) ;
-                        ListDetailAct.add(detailAct) ;
-                    }
-                    YesAdd = true ;
-                }
-                 else
-                {   //Alert
-                    throw new IllegalArgumentException("Vous avez une autre reservation au meme date " );
+    public void sendConfirmationEmail(Reservation res, String SiteURL) throws MessagingException, UnsupportedEncodingException {
 
-                }
-            }
-        }
-        if(YesAdd == true) {
-            Res.setReservation_utilisateur(user);
-            Res.setActivities(ListDetailAct);
-            Res.setStatut(Statut.Déposée);
-            reservationRepository.save(Res);
-            return new String("Ajout de la reservation avec succes") ;
-        }
-        else
-        return new String("echec d'ajout") ;*/
+        String subject = "Confirmer votre réservation" ;
+        String senderName = "aaaaaaaa";
+              //  res.getDetailsActivities().get(0).getActivity().getActivity_CentreCamp().getNom_centre();
+             //   res.getDetailsActivities().stream().findFirst().get().getActivity().getActivity_CentreCamp().getNom_centre();
+        String mailContent = "<p>Bonjour " + res.getReservation_utilisateur().getNom_user()+ " " +   res.getReservation_utilisateur().getPrenom_user() +", </p>";
+        mailContent += "<p> Cliquer sur ce lien pour confirmer ta réservation : "  ;
+        String ConfirmerUrl = SiteURL+ "/Consult?id="+ res.getId_reservation()  ;
+
+       // mailContent += "<h3><a href=\""+ SiteURL +"\"> VERIFY</a></h3>" ;
+
+
+        mailContent += "Cliquez sur le lien suivant pour confirmer votre e-mail : <a href=\"http://localhost:8082/CampProject/swagger-ui/index.html\">Confirmer</a>";
+
+        mailContent += "<p> Merci d'avance .</p>" ;
+
+        MimeMessage message = MailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message) ;
+       // helper.setFrom(res.getDetailsActivities().stream().findFirst().get().getActivity().getActivity_CentreCamp().getEmail_centre(),senderName);
+       // helper.setTo(res.getReservation_utilisateur().getEmail_user());
+        helper.setFrom("marwabelaid01@gmail.com",senderName);
+        helper.setTo("marwabelaid01@gmail.com");
+
+        helper.setSubject(subject);
+        helper.setText(mailContent,true);
+        MailSender.send(message);
+    }
 
 
     @Override

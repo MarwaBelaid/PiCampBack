@@ -1,5 +1,6 @@
 package tn.esprit.picompback.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -69,6 +70,7 @@ public class Post implements Serializable {
     }
 
     @ManyToOne
+    @JsonIgnore
     Utilisateurs post_utilisateurs ;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "favoris")
     Set<Utilisateurs> utilisateursFavoris;
@@ -76,6 +78,8 @@ public class Post implements Serializable {
     Set<Commentaire> Commentaires ;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "signal_Post")
     Set<Signals> signals ;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy="post")
+//    private Set<Like> likes;
     @Transient
     public String getPhotosImagePath() {
         if (imagePath == null ) return null;

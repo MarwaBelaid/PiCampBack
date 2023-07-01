@@ -29,9 +29,10 @@ public class PostController {
     private final String IMAGE_UPLOAD_DIR = "images/";
     @Autowired
     private IPostService postService;
-    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Post createPost(@RequestHeader("Content-Type") String HeaderValue, @ModelAttribute Post p, @RequestParam("image_path") MultipartFile multipartFile) throws IOException {
-        return postService.addPost(p,multipartFile);
+    @PostMapping(value = "/create/{idUser}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Post createPost(@RequestHeader("Content-Type") String HeaderValue, @ModelAttribute Post p, @RequestParam("image_path") MultipartFile multipartFile,@PathVariable ("idUser") long idUser) throws IOException {
+//        long idUser = Long.parseLong(idUser);
+        return postService.addPost(p,multipartFile,idUser);
     }
 
     @GetMapping("/get/{id}")
