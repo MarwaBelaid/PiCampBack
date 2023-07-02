@@ -23,6 +23,7 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id ;
     long nbLike;
+    long feedback;
     boolean liked;
     String sujet ;
     String contenu;

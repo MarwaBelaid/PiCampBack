@@ -55,4 +55,9 @@ public class PostController {
         postService.updateLike(id,liked,likes);
         return "like mis a jour";
     }
+    @PutMapping("/feedback/{id}")
+    public String addFeedback(@PathVariable Long id, @RequestBody long feedback) {
+        postService.addFeedback(id,feedback);
+        return "feedback mis a jour";
+    }
 }

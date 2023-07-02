@@ -14,4 +14,5 @@ public interface IPostService {
     List<Post> getAllPosts();
     void deletePost(long id);
     void updateLike(long id,boolean liked,long likes);
+        void addFeedback(long id,long feedback);
 }

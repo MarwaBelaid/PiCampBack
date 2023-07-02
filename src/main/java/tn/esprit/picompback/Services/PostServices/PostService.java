@@ -57,4 +57,11 @@ public class PostService implements IPostService {
         p.setNbLike(likes);
         postRepo.save(p);
     }
+    @Override
+    public void addFeedback(long id,long feedback){
+        Post p = postRepo.findById(id).orElse(null);
+        p.setFeedback(feedback);
+        postRepo.save(p);
+    }
+
 }
