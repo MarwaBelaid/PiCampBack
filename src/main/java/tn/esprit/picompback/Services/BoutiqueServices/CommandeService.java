@@ -8,12 +8,13 @@ import tn.esprit.picompback.Entities.Enumeration.StatusEquipement;
 import tn.esprit.picompback.Entities.Enumeration.TypeCommande;
 import tn.esprit.picompback.Entities.Enumeration.TypePaiement;
 import tn.esprit.picompback.Repositories.BoutiqueRepos.*;
-import tn.esprit.picompback.Repositories.UserRepos.UtilisateurRepository;
+
 import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tn.esprit.picompback.Repositories.UserRepository;
 
 
 @Service
@@ -23,7 +24,7 @@ public class CommandeService implements ICommandeService {
     CommandeRepo commande_repo;
 
     @Autowired
-    UtilisateurRepository util_repo;
+    UserRepository util_repo;
     @Autowired
     CommandeEquipementRepo commande_equipement_repo;
 

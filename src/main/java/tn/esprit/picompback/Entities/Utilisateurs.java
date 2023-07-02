@@ -4,9 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import java.util.HashSet;
 
 @Getter
 @Setter
@@ -15,26 +19,40 @@ import java.util.Set;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@Table(name="users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
 public class Utilisateurs implements Serializable {
 
 
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 long id_user ;
-String nom_user ;
-String prenom_user ;
+@NotBlank
+@Size(max = 20)
+String username;
+@NotBlank
+@Size(max = 50)
+@Email
+String email ;
+//@NotBlank
 
-String email_user ;
-String mdp_user ;
+String password_user;
 String adresse_user;
 String tel_user;
 Date date_naiss_user;
 byte[] photo_user;
 Date date_inscription;
 
-@ManyToOne
-@JsonIgnore
-Role role_user ;
+
+@ManyToMany
+@JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+private Set<Role> roles = new HashSet<>();
+
+
 
 @ManyToOne
 @JsonIgnore
@@ -79,5 +97,15 @@ Set<Commande> Commandes ;
 //@OneToOne(mappedBy="likeuser")
 //private Like like;
 
+
+   /* public Utilisateurs(String username, String email, String encode) {
+
+    }*/
+
+    public Utilisateurs(String username, String email, String password_user) {
+        this.username = username;
+        this.email = email;
+        this.password_user = password_user;
+    }
 
 }
