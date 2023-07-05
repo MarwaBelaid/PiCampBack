@@ -10,7 +10,7 @@ import tn.esprit.picompback.Entities.Post;
 import tn.esprit.picompback.Entities.Utilisateurs;
 import tn.esprit.picompback.Repositories.CommentRepos.ICommentRepository;
 import tn.esprit.picompback.Repositories.PostRepos.IPostRepository;
-import tn.esprit.picompback.Repositories.UserRepository;
+import tn.esprit.picompback.Repositories.UserRepos.UtilisateurRepository;
 import tn.esprit.picompback.Services.PostServices.IPostService;
 import tn.esprit.picompback.Utils.FileUploadUtil;
 
@@ -23,7 +23,7 @@ import java.util.Optional;
 public class CommentService implements ICommentService {
     @Autowired
     private ICommentRepository commentRepository;
-    private UserRepository userRepo;
+    private UtilisateurRepository userRepo;
     private IPostRepository postRepo;
     @Override
     public Commentaire addComment(Commentaire c, long idUser,long idPost) throws IOException {

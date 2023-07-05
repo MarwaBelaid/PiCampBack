@@ -14,7 +14,7 @@ import tn.esprit.picompback.Entities.Utilisateurs;
 import tn.esprit.picompback.Repositories.CampRepos.ActivityRepository;
 import tn.esprit.picompback.Repositories.CampRepos.DetailsActivityRepository;
 import tn.esprit.picompback.Repositories.CampRepos.ReservationRepository;
-import tn.esprit.picompback.Repositories.UserRepository;
+import tn.esprit.picompback.Repositories.UserRepos.UtilisateurRepository;
 import tn.esprit.picompback.Services.CampService.InterfaceService.IReservationService;
 
 import javax.mail.MessagingException;
@@ -30,7 +30,7 @@ public class ReservationService implements IReservationService {
     ReservationRepository reservationRepository ;
 
     @Autowired
-    UserRepository utilisateursRepository ;
+    UtilisateurRepository utilisateursRepository ;
 
     @Autowired
     ActivityRepository activityRepository ;
@@ -147,7 +147,7 @@ public class ReservationService implements IReservationService {
         String senderName = "aaaaaaaa";
               //  res.getDetailsActivities().get(0).getActivity().getActivity_CentreCamp().getNom_centre();
              //   res.getDetailsActivities().stream().findFirst().get().getActivity().getActivity_CentreCamp().getNom_centre();
-        String mailContent = "<p>Bonjour " + res.getReservation_utilisateur().getUsername()+"</p>";
+        String mailContent = "<p>Bonjour " + res.getReservation_utilisateur().getNom_user()+ " " +   res.getReservation_utilisateur().getPrenom_user() +", </p>";
         mailContent += "<p> Cliquer sur ce lien pour confirmer ta réservation : "  ;
         String ConfirmerUrl = SiteURL+ "/Consult?id="+ res.getId_reservation()  ;
 

@@ -8,7 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.picompback.Entities.*;
 import tn.esprit.picompback.Repositories.PostRepos.IPostRepository;
-import tn.esprit.picompback.Repositories.UserRepository;
+import tn.esprit.picompback.Repositories.UserRepos.UtilisateurRepository;
 import tn.esprit.picompback.Utils.FileUploadUtil;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class PostService implements IPostService {
     @Autowired
     private IPostRepository postRepo;
-    private UserRepository userRepo;
+    private UtilisateurRepository userRepo;
     @Override
     public Post addPost(Post p, MultipartFile multipartFile,long idUser) throws IOException {
 

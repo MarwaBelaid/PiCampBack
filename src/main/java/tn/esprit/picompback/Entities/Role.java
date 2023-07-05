@@ -2,10 +2,11 @@ package tn.esprit.picompback.Entities;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import tn.esprit.picompback.Entities.Enumeration.role_enum;
+import tn.esprit.picompback.Entities.Enumeration.role;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,14 +15,13 @@ import java.io.Serializable;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name="roles")
-public class Role implements Serializable {
+public class Role implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_role;
+    long id_role ;
     @Enumerated(EnumType.STRING)
-
-    role_enum name;
+    role role_user  ;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role_user")
+    Set<Utilisateurs> utilisateurs ;
 }
-
