@@ -129,6 +129,7 @@ public class CommandeService implements ICommandeService {
                 c.setDate_debut_location(null);
                 c.setDate_fin_location(null);
             }
+            c.setEtat(EtatCommande.Passée);
             commande_repo.save(c);
         }else {
             throw new IllegalArgumentException("Commande introuvable ");
@@ -172,6 +173,5 @@ public class CommandeService implements ICommandeService {
         }
 
     }
-
-
+    
 }

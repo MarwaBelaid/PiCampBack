@@ -4,6 +4,7 @@ import tn.esprit.picompback.Entities.Commande;
 import tn.esprit.picompback.Entities.CommandeEquipement;
 import tn.esprit.picompback.Entities.Enumeration.*;
 import tn.esprit.picompback.Entities.Equipement;
+import tn.esprit.picompback.Entities.Utilisateurs;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface ICommandeService {
     Commande retrieveCommandeUser(Long idUser , EtatCommande etat);
 
     void updateCart(Long idCommande, Long idEquiCommande, int qty);
+
+
 
 }
