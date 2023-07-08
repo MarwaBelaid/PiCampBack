@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.picompback.Entities.Commande;
-import tn.esprit.picompback.Entities.Enumeration.TypeCommande;
-import tn.esprit.picompback.Entities.Enumeration.TypePaiement;
+import tn.esprit.picompback.Entities.CommandeEquipement;
+import tn.esprit.picompback.Entities.Enumeration.*;
 import tn.esprit.picompback.Entities.Equipement;
 import tn.esprit.picompback.Services.BoutiqueServices.ICommandeService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/commande")
@@ -23,8 +25,25 @@ public class CommandeController {
     }
 
     @PutMapping("/updateCommande/{idCommande}")
-    public String UpdateCommande(@PathVariable Long idCommande, @RequestParam TypeCommande typeCommande,@RequestParam TypePaiement typePaiement,@RequestParam int daysLocation) {
+    public String UpdateCommande(@PathVariable Long idCommande, @RequestBody TypeCommande typeCommande,@RequestBody TypePaiement typePaiement,@RequestBody int daysLocation) {
         commande_service.UpdateCommande(idCommande,typeCommande,typePaiement,daysLocation);
         return "commande mis a jour";
+    }
+
+    @GetMapping("/EquipementCommandebyid/{idCommande}")
+    public List<CommandeEquipement> retrieveCommandesEquipement(@PathVariable Long idCommande) {
+        return commande_service.retrieveCommandesEquipement(idCommande);
+    }
+
+    @GetMapping("/CommandebyidUser/{idUser}")
+    public Commande retrieveCommandeUser(@PathVariable Long idUser) {
+        return commande_service.retrieveCommandeUser(idUser,EtatCommande.EnCoursTraitement);
+    }
+
+
+    @PutMapping("/updateCart/{idCommande}/{idEquiCommande}/{qty}")
+    public String updateCart(@PathVariable Long idCommande, @PathVariable Long idEquiCommande,@PathVariable int qty) {
+        commande_service.updateCart(idCommande,idEquiCommande,qty);
+        return "cart mis a jour";
     }
 }

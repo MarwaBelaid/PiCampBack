@@ -1,5 +1,6 @@
 package tn.esprit.picompback.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import tn.esprit.picompback.Entities.Enumeration.EtatCommande;
@@ -39,6 +40,7 @@ public class Commande implements Serializable {
     @Enumerated(EnumType.STRING)
     TypeCommande type_commande ;
     @ManyToOne
+    @JsonIgnore
     Utilisateurs commande_utilisateur ;
 
 
@@ -46,6 +48,7 @@ public class Commande implements Serializable {
     Set<Promo> Promos ;
 
     @OneToMany(mappedBy = "commande")
+    @JsonIgnore
     private Set<CommandeEquipement> commandeEquipements;
 
     public Set<CommandeEquipement> getCommandeEquipements() {
