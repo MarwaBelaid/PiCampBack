@@ -26,7 +26,7 @@ public class CommandeController {
     }
 
     @PutMapping("/updateCommande/{idCommande}")
-    public String UpdateCommande(@PathVariable Long idCommande, @RequestBody TypeCommande typeCommande,@RequestBody TypePaiement typePaiement,@RequestBody Integer daysLocation) {
+    public String UpdateCommande(@PathVariable Long idCommande, @RequestParam TypeCommande typeCommande,@RequestParam TypePaiement typePaiement,@RequestParam Integer daysLocation) {
         commande_service.UpdateCommande(idCommande,typeCommande,typePaiement,daysLocation);
         return "commande mis a jour";
     }
