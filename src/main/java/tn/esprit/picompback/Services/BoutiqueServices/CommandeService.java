@@ -24,6 +24,8 @@ public class CommandeService implements ICommandeService {
     CommandeRepo commande_repo;
 
     @Autowired
+    userCommandeRepo user_repo;
+    @Autowired
     UtilisateurRepository util_repo;
     @Autowired
     CommandeEquipementRepo commande_equipement_repo;
@@ -113,18 +115,24 @@ public class CommandeService implements ICommandeService {
     }
 
     @Override
-    public void UpdateCommande(Long idCommande,TypeCommande typeCommande, TypePaiement typePaiement, int daysLocation) {
+    public void UpdateCommande(Long idCommande,TypeCommande typeCommande, TypePaiement typePaiement, Integer daysLocation) {
         Commande c = commande_repo.findById(idCommande).orElse(null);
+        logger.info("*************************//////////////////////////////////////In method " + typeCommande + " : "+ typePaiement);
 
         if (c != null) {
-            c.setType_commande(typeCommande);
-            c.setType_paiement(typePaiement);
+            if(typePaiement == TypePaiement.Espèce) {
+                c.setType_paiement(TypePaiement.Espèce);
+            }else {
+                c.setType_paiement(TypePaiement.CarteBancaire);
+            }
 
             if(typeCommande == TypeCommande.Location){
+                c.setType_commande(TypeCommande.Location);
                 c.setDate_achat_commande(null);
                 c.setDate_debut_location(LocalDate.now());
                 c.setDate_fin_location(LocalDate.now().plusDays(daysLocation));
             }else{
+                c.setType_commande(TypeCommande.Achat);
                 c.setDate_achat_commande(LocalDate.now());
                 c.setDate_debut_location(null);
                 c.setDate_fin_location(null);
@@ -172,6 +180,11 @@ public class CommandeService implements ICommandeService {
             throw new IllegalArgumentException("Commande Equipement introuvable ");
         }
 
+    }
+
+    @Override
+    public Utilisateurs retrieveUser(Long idUser){
+        return user_repo.findById(idUser).orElse(null);
     }
     
 }

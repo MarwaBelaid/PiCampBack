@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ICommandeService {
     void PasserCommande(Long idProduit, Long idClient, int qty);
-    void UpdateCommande( Long idCommande,TypeCommande typeCommande, TypePaiement typePaiement, int daysLocation);
+    void UpdateCommande( Long idCommande,TypeCommande typeCommande, TypePaiement typePaiement, Integer daysLocation);
 
     List<CommandeEquipement> retrieveCommandesEquipement(Long idCommande);
 
@@ -18,6 +18,6 @@ public interface ICommandeService {
 
     void updateCart(Long idCommande, Long idEquiCommande, int qty);
 
-
+    Utilisateurs retrieveUser(Long idUser);
 
 }

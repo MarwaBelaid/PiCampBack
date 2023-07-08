@@ -7,6 +7,7 @@ import tn.esprit.picompback.Entities.Commande;
 import tn.esprit.picompback.Entities.CommandeEquipement;
 import tn.esprit.picompback.Entities.Enumeration.*;
 import tn.esprit.picompback.Entities.Equipement;
+import tn.esprit.picompback.Entities.Utilisateurs;
 import tn.esprit.picompback.Services.BoutiqueServices.ICommandeService;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class CommandeController {
     }
 
     @PutMapping("/updateCommande/{idCommande}")
-    public String UpdateCommande(@PathVariable Long idCommande, @RequestBody TypeCommande typeCommande,@RequestBody TypePaiement typePaiement,@RequestBody int daysLocation) {
+    public String UpdateCommande(@PathVariable Long idCommande, @RequestBody TypeCommande typeCommande,@RequestBody TypePaiement typePaiement,@RequestBody Integer daysLocation) {
         commande_service.UpdateCommande(idCommande,typeCommande,typePaiement,daysLocation);
         return "commande mis a jour";
     }
@@ -45,5 +46,10 @@ public class CommandeController {
     public String updateCart(@PathVariable Long idCommande, @PathVariable Long idEquiCommande,@PathVariable int qty) {
         commande_service.updateCart(idCommande,idEquiCommande,qty);
         return "cart mis a jour";
+    }
+
+    @GetMapping("/getUser/{idUser}")
+    public Utilisateurs retrieveUser(@PathVariable Long idUser) {
+        return commande_service.retrieveUser(idUser);
     }
 }
