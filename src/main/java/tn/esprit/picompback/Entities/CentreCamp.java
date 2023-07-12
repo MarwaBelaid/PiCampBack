@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 
@@ -28,17 +29,23 @@ public class CentreCamp implements Serializable {
     String email_centre;
     float tarif_nuitee;
     int places_disponibles;
+   // @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable (name = "centre_images",
+    joinColumns =  {
+         @JoinColumn(name = "centre_id")},
+    inverseJoinColumns =  {
+            @JoinColumn(name = "image_id")})
+    Set<Image> photos ;
 
-    @Column( length = 10000)
-    //@Lob
-    String photos_centre ;
-    //@JsonIgnore
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Feedback_CentreCamp")
     Set<Feedback> Feedbacks ;
-    //@JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Activity_CentreCamp")
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "activityCentreCamp")
     Set<Activity> Activities ;
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Equipement_CentreCamp")
     Set<Equipement> Equipements ;
 

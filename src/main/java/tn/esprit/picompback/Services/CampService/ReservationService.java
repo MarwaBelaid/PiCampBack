@@ -60,7 +60,7 @@ public class ReservationService implements IReservationService {
     public void UpdateEtatActivity (DetailsActivity da)
     {
         if(da.getNbPlace()==0)
-            da.setEtatActivity(EtatActivityCentreCamp.Complet);
+            da.setEtatActivity("Complet");
         detailsActivityRepository.save(da) ;
     }
 
@@ -100,7 +100,7 @@ public class ReservationService implements IReservationService {
         Set<Reservation> listRes = new HashSet<>() ;
         float MontantTotal = 0;
         if(nbNuit>0)
-            MontantTotal = nbNuit*(detailsActivityRepository.findById(ListActivity.get(0)).get().getActivity().getActivity_CentreCamp().getTarif_nuitee());
+            MontantTotal = nbNuit*(detailsActivityRepository.findById(ListActivity.get(0)).get().getActivity().getActivityCentreCamp().getTarif_nuitee());
         for(Long IdDa : ListActivity) {
             DetailsActivity da = detailsActivityRepository.findById(IdDa).orElse(null);
             if (da != null) {

@@ -27,10 +27,12 @@ public class DetailsActivity implements Serializable {
     LocalTime heure_debut ;
     LocalTime heure_fin;
     Date date ;
-    @Enumerated(EnumType.STRING)
-    EtatActivityCentreCamp etatActivity;
+   /* @Enumerated(EnumType.STRING)
+    EtatActivityCentreCamp etatActivity = EtatActivityCentreCamp.NonComplet;*/
     int nbPlace ;
 
+
+    String etatActivity ;
     @JsonIgnore
     @ManyToOne
     Activity activity ;
@@ -43,8 +45,10 @@ public class DetailsActivity implements Serializable {
     //Set<Reservation> Activities_Reservation;
     //@ManyToMany(fetch = FetchType.EAGER)
 
-    @ManyToMany(mappedBy = "detailsActivities")
+    @ManyToMany(mappedBy = "detailsActivitiesRes")
     @JsonIgnore
     Set<Reservation> reservations;
+
+
 
 }

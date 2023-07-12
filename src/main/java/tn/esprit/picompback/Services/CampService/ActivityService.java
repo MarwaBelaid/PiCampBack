@@ -29,21 +29,41 @@ public class ActivityService implements IActivityService {
     @Override
     public Activity AjouterActivity(Activity a) {
 
-        Set<DetailsActivity> da = new HashSet<>() ;
-        da=a.getDetailsActivity() ;
-        if(da != null) {
+        try {
 
-             for (DetailsActivity d : da) {
-                d.setActivity(a);
-                detailsActivityRepository.save(d);
+            // Enregistrement de l'activité principale
+            //Activity aa = activityRepository.save(a);
+
+            Set<DetailsActivity> detailsActivitySet = new HashSet<>();
+            for (DetailsActivity detailsActivity : a.getDetailsActivity()) {
+                detailsActivity.setActivity(a);
+                detailsActivitySet.add(detailsActivity);
             }
 
-            a.setDetailsActivity(da);
-            ModifierIdDetails(a);
+// Set the DetailsActivity set to the Activity object
+            a.setDetailsActivity(detailsActivitySet);
+
+// Save the updated Activity object
             activityRepository.save(a);
+
+
+            // Enregistrement des détails de l'activité
+           if (a.getDetailsActivity() != null) {
+                for (DetailsActivity d : a.getDetailsActivity()) {
+                    d.setActivity(a);
+                    detailsActivityRepository.save(d);
+                }
+            }
+
+
+            return a;
+        } catch (Exception e) {
+            // Gérer les exceptions ici ou les propager pour une gestion plus globale
+            e.printStackTrace();
+            throw new IllegalArgumentException("Erreur lors de l'ajout de l'activité : " + e.getMessage());
         }
-        return a;
     }
+
     public void ModifierIdDetails(Activity a)
     {
         int indiceMax = detailsActivityRepository.finMaxIdByActivity(a.getId_activity()) ;
@@ -61,8 +81,8 @@ public class ActivityService implements IActivityService {
     }
 
     @Override
-    public void updateActivity(Activity a) {
-        activityRepository.save(a) ;
+    public Activity updateActivity(Activity a) {
+        return activityRepository.save(a) ;
     }
 
     @Override
@@ -87,7 +107,7 @@ public class ActivityService implements IActivityService {
         else if (!activityRepository.findById(idActivity).isPresent())
             return "L'Activity " +  idActivity+ " non trouvé  " ;
         else {
-            Act.setActivity_CentreCamp(camp);
+            Act.setActivityCentreCamp(camp);
             activityRepository.save(Act);
             return "Affectation avec success" ;
         }

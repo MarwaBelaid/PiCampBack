@@ -1,8 +1,10 @@
 package tn.esprit.picompback.Services.CampService.InterfaceService;
 
 import tn.esprit.picompback.Entities.Activity;
+import tn.esprit.picompback.Entities.DetailsActivity;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IActivityService {
 
@@ -10,7 +12,7 @@ public interface IActivityService {
 
     List<Activity> GetActivities() ;
 
-    void updateActivity (Activity a) ;
+    Activity updateActivity (Activity a) ;
 
     Activity GetActivity(long id) ;
 

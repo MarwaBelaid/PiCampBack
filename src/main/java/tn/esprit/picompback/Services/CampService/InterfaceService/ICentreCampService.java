@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface ICentreCampService {
 
-    CentreCamp AjouterCentreCamp(CentreCamp cca, List<MultipartFile>  multipartFile) throws IOException;
+    CentreCamp AjouterCentreCamp(CentreCamp cca) throws IOException;
 
     List<CentreCamp> GetCentreCamps() ;
 
-    void updateCentreCamp (CentreCamp cca) ;
+    CentreCamp updateCentreCamp (CentreCamp cca) ;
 
     CentreCamp GetCentreCamp(long id) ;
 

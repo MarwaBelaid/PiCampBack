@@ -47,7 +47,7 @@ public class Reservation implements Serializable {
             joinColumns = @JoinColumn(name = "reservation_id"),
             inverseJoinColumns = @JoinColumn(name = "details_id")
     )
-    Set<DetailsActivity> detailsActivities;
+    Set<DetailsActivity> detailsActivitiesRes;
 
 
 
